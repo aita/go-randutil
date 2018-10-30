@@ -7,9 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const N = 100000
-
 func TestBeta(t *testing.T) {
+	const N = 100000
 	alpha, beta := 100., 100.
 
 	var mu, sigma2 float64
