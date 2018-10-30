@@ -5,6 +5,7 @@ import (
 	"math/rand"
 )
 
+// Gamma returns a random number with gamma distribution.
 func Gamma(k, theta float64) float64 {
 	if k <= 0 {
 		panic("gamma: k must be greater than 0")
@@ -63,17 +64,4 @@ func Gamma(k, theta float64) float64 {
 			return d * v * theta
 		}
 	}
-}
-
-func Beta(alpha, beta float64) float64 {
-	if alpha <= 0 {
-		panic("beta: alpha must be greater than 0")
-	}
-	if beta <= 0 {
-		panic("beta: beta must be greater than 0")
-	}
-
-	x := Gamma(alpha, 1.0)
-	y := Gamma(beta, 1.0)
-	return x / (x + y)
 }
