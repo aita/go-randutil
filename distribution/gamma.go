@@ -16,7 +16,7 @@ func Gamma(k, theta float64) float64 {
 
 	// 0 < k <= 1
 	// GS Algorithm
-	if k <= 1 {
+	if k < 1 {
 		for {
 			// step 1
 			u := rand.Float64()
@@ -43,25 +43,27 @@ func Gamma(k, theta float64) float64 {
 			}
 			return x * theta
 		}
-	}
-
-	// k > 1
-	// Marsaglia-Tsang Algorithm
-	d := k - 1/3.
-	c := 1 / math.Sqrt(9*d)
-	for {
-		x := rand.NormFloat64()
-		v := 1 + c*x
-		if v <= 0 {
-			continue
-		}
-		v = v * v * v
-		u := rand.Float64()
-		if u < 1-0.0331*x*x*x*x {
-			return d * v * theta
-		}
-		if math.Log(u) < 0.5*x*x+d*(1-v+math.Log(v)) {
-			return d * v * theta
+	} else if k == 1 {
+		return rand.ExpFloat64() * theta
+	} else {
+		// k > 1
+		// Marsaglia-Tsang Algorithm
+		d := k - 1/3.
+		c := 1 / math.Sqrt(9*d)
+		for {
+			x := rand.NormFloat64()
+			v := 1 + c*x
+			if v <= 0 {
+				continue
+			}
+			v = v * v * v
+			u := rand.Float64()
+			if u < 1-0.0331*x*x*x*x {
+				return d * v * theta
+			}
+			if math.Log(u) < 0.5*x*x+d*(1-v+math.Log(v)) {
+				return d * v * theta
+			}
 		}
 	}
 }
